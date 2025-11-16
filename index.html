@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TaxiMóvil</title>
+    <title>CubanRide</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <style>
         * {
@@ -22,29 +22,56 @@
         
         .container {
             width: 100%;
-            padding: 15px;
+            padding: 10px;
         }
         
         header {
-            background-color: #1a73e8;
+            background: #000;
             color: white;
             padding: 15px;
             text-align: center;
-            border-radius: 0 0 10px 10px;
             margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
         
-        .logo {
+        .logo-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+        
+        .logo-text {
             font-size: 1.5rem;
             font-weight: bold;
         }
         
+        .logo-part1 {
+            color: #ff6b6b;
+        }
+        
+        .logo-part2 {
+            color: #4dabf7;
+        }
+        
+        .tagline {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+        
         .card {
             background: white;
-            border-radius: 10px;
+            border-radius: 8px;
             padding: 15px;
             margin-bottom: 15px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border: 1px solid #eaeaea;
         }
         
         .form-group {
@@ -55,22 +82,23 @@
             display: block;
             margin-bottom: 5px;
             font-weight: 500;
+            color: #000;
         }
         
-        input, select {
+        input, select, textarea {
             width: 100%;
             padding: 12px;
             border: 1px solid #ddd;
-            border-radius: 8px;
+            border-radius: 6px;
             font-size: 1rem;
         }
         
         .btn {
-            background-color: #1a73e8;
+            background: #000;
             color: white;
             border: none;
-            padding: 15px;
-            border-radius: 8px;
+            padding: 14px;
+            border-radius: 6px;
             width: 100%;
             font-size: 1rem;
             font-weight: 500;
@@ -78,15 +106,24 @@
         }
         
         .btn-secondary {
-            background-color: #5f6368;
-            margin-top: 10px;
+            background: #6c757d;
+            margin-top: 8px;
+        }
+        
+        .btn-success {
+            background: #28a745;
+        }
+        
+        .btn-warning {
+            background: #ffc107;
+            color: #000;
         }
         
         .map-container {
-            height: 200px;
-            border-radius: 8px;
+            height: 250px;
+            border-radius: 6px;
             overflow: hidden;
-            margin-top: 10px;
+            margin-top: 8px;
             border: 1px solid #ddd;
         }
         
@@ -99,27 +136,28 @@
         .driver-card {
             display: flex;
             align-items: center;
-            padding: 10px;
+            padding: 12px;
             border: 1px solid #ddd;
             border-radius: 8px;
             cursor: pointer;
         }
         
         .driver-card.selected {
-            border-color: #1a73e8;
-            background-color: #e8f0fe;
+            border-color: #000;
+            background-color: #f8f9fa;
         }
         
         .driver-avatar {
-            width: 50px;
-            height: 50px;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
-            background-color: #ddd;
-            margin-right: 15px;
+            background: #000;
+            margin-right: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
+            font-size: 1.2rem;
+            color: white;
         }
         
         .driver-info {
@@ -127,13 +165,20 @@
         }
         
         .driver-name {
-            font-weight: 500;
-            margin-bottom: 5px;
+            font-weight: 600;
+            margin-bottom: 3px;
+            color: #000;
         }
         
         .driver-rating {
             color: #fbbc05;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
+            margin-bottom: 2px;
+        }
+        
+        .driver-car {
+            font-size: 0.8rem;
+            color: #666;
         }
         
         .hidden {
@@ -142,33 +187,192 @@
         
         .section-title {
             margin-bottom: 15px;
-            font-size: 1.2rem;
-            color: #1a73e8;
+            font-size: 1.1rem;
+            color: #000;
+            font-weight: 600;
+            padding-bottom: 5px;
         }
         
         .tab-container {
             display: flex;
             margin-bottom: 15px;
-            border-bottom: 1px solid #ddd;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
         }
         
         .tab {
-            padding: 10px 15px;
+            padding: 12px 15px;
             cursor: pointer;
             font-weight: 500;
+            flex: 1;
+            text-align: center;
         }
         
         .tab.active {
-            border-bottom: 2px solid #1a73e8;
-            color: #1a73e8;
+            background: #000;
+            color: white;
+        }
+        
+        .location-buttons {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        
+        .location-buttons .btn {
+            flex: 1;
+            padding: 10px;
+            font-size: 0.8rem;
+        }
+        
+        .map-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+        
+        .map-actions .btn {
+            flex: 1;
+        }
+        
+        .cuba-bounds-notice {
+            background: #f8f9fa;
+            border-left: 3px solid #000;
+            padding: 8px;
+            margin-top: 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+        
+        .permission-banner {
+            background: #ff6b6b;
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+        
+        .permission-buttons {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        
+        .permission-buttons .btn {
+            flex: 1;
+            padding: 8px;
+        }
+        
+        .vehicle-options {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        
+        .vehicle-option {
+            flex: 1;
+            text-align: center;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        
+        .vehicle-option.selected {
+            border-color: #000;
+            background-color: #f8f9fa;
+        }
+        
+        .vehicle-icon {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+        
+        .cargo-options {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        
+        .cargo-option {
+            flex: 1;
+            text-align: center;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        
+        .cargo-option.selected {
+            border-color: #28a745;
+            background-color: #f8f9fa;
+        }
+        
+        .auto-location-marker {
+            background: #28a745;
+            border: 2px solid white;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+        }
+        
+        .permission-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin: 3px 0;
+            font-size: 0.8rem;
+        }
+        
+        .status-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #6c757d;
+        }
+        
+        .status-indicator.granted {
+            background: #28a745;
+        }
+        
+        .status-indicator.denied {
+            background: #dc3545;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <div class="logo">🚕 TaxiMóvil</div>
+            <div class="logo-circle">🚗</div>
+            <div>
+                <div class="logo-text">
+                    <span class="logo-part1">Cuban</span><span class="logo-part2">Ride</span>
+                </div>
+                <div class="tagline">Tu transporte seguro en Cuba</div>
+            </div>
         </header>
+        
+        <div class="permission-banner" id="permission-banner">
+            <div>Para una mejor experiencia, necesitamos algunos permisos:</div>
+            <div class="permission-status">
+                <div class="status-indicator" id="location-status"></div>
+                <span>Ubicación</span>
+            </div>
+            <div class="permission-status">
+                <div class="status-indicator" id="notification-status"></div>
+                <span>Notificaciones</span>
+            </div>
+            <div class="permission-status">
+                <div class="status-indicator" id="storage-status"></div>
+                <span>Almacenamiento</span>
+            </div>
+            <div class="permission-buttons">
+                <button class="btn btn-success" id="btn-request-permissions">Permitir Todo</button>
+                <button class="btn btn-secondary" id="btn-skip-permissions">Omitir</button>
+            </div>
+        </div>
         
         <div class="tab-container">
             <div class="tab active" id="tab-form">Solicitar Viaje</div>
@@ -186,19 +390,64 @@
                 
                 <div class="form-group">
                     <label for="telefono">Número de Teléfono</label>
-                    <input type="tel" id="telefono" placeholder="Ej: +1234567890" required>
+                    <input type="tel" id="telefono" placeholder="Ej: +53 5xxx xxxx" required>
                 </div>
                 
                 <div class="form-group">
                     <label for="origen">Dirección de Origen</label>
                     <input type="text" id="origen" placeholder="Donde te recogemos">
-                    <button class="btn btn-secondary" id="btn-map-origen">Usar Mapa para Origen</button>
+                    <div class="location-buttons">
+                        <button class="btn btn-secondary" id="btn-map-origen">Usar Mapa</button>
+                        <button class="btn btn-success" id="btn-current-origen">📍 Actual</button>
+                        <button class="btn btn-warning" id="btn-auto-locate">🌍 Auto</button>
+                    </div>
                 </div>
                 
                 <div class="form-group">
                     <label for="destino">Dirección de Destino</label>
                     <input type="text" id="destino" placeholder="A donde vas">
-                    <button class="btn btn-secondary" id="btn-map-destino">Usar Mapa para Destino</button>
+                    <div class="location-buttons">
+                        <button class="btn btn-secondary" id="btn-map-destino">Usar Mapa</button>
+                        <button class="btn btn-success" id="btn-current-destino">📍 Actual</button>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Tipo de Vehículo</label>
+                    <div class="vehicle-options">
+                        <div class="vehicle-option" data-type="moto">
+                            <div class="vehicle-icon">🏍️</div>
+                            <div>Moto</div>
+                        </div>
+                        <div class="vehicle-option selected" data-type="carro">
+                            <div class="vehicle-icon">🚗</div>
+                            <div>Carro</div>
+                        </div>
+                        <div class="vehicle-option" data-type="camioneta">
+                            <div class="vehicle-icon">🚐</div>
+                            <div>Camioneta</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>¿Necesita servicio de carga?</label>
+                    <div class="cargo-options">
+                        <div class="cargo-option" data-cargo="no">
+                            <div>🚫 Sin Carga</div>
+                        </div>
+                        <div class="cargo-option" data-cargo="pequena">
+                            <div>📦 Pequeña</div>
+                        </div>
+                        <div class="cargo-option" data-cargo="grande">
+                            <div>📦 Grande</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group" id="cargo-details-group" style="display: none;">
+                    <label for="cargo-details">Detalles del Cargamento</label>
+                    <textarea id="cargo-details" placeholder="Describe qué vas a transportar" rows="2"></textarea>
                 </div>
                 
                 <div class="form-group">
@@ -220,7 +469,6 @@
                 <div class="section-title">Selecciona un Conductor</div>
                 
                 <div class="driver-list" id="driver-list">
-                    <!-- Los conductores se cargarán aquí dinámicamente -->
                 </div>
                 
                 <button class="btn" id="btn-confirm">Confirmar y Enviar por WhatsApp</button>
@@ -231,8 +479,11 @@
         <div id="map-modal" class="hidden">
             <div class="card">
                 <div class="section-title" id="map-title">Selecciona ubicación en el mapa</div>
+                <div class="cuba-bounds-notice">
+                    El mapa está limitado al territorio cubano.
+                </div>
                 <div class="map-container" id="map"></div>
-                <div style="display: flex; gap: 10px; margin-top: 15px;">
+                <div class="map-actions">
                     <button class="btn" id="btn-confirm-location">Confirmar Ubicación</button>
                     <button class="btn btn-secondary" id="btn-cancel-map">Cancelar</button>
                 </div>
@@ -246,71 +497,379 @@
         let marker;
         let currentMapField = '';
         let selectedDriver = null;
+        let userLocationMarker = null;
+        let vehicleType = 'carro';
+        let cargoType = 'no';
+        let watchId = null;
         
-        const drivers = [
-            { id: 1, name: "Carlos Mendoza", phone: "+1234567890", rating: 4.8, car: "Toyota Corolla 2020" },
-            { id: 2, name: "Ana Rodríguez", phone: "+1234567891", rating: 4.9, car: "Honda Civic 2021" },
-            { id: 3, name: "Miguel Torres", phone: "+1234567892", rating: 4.7, car: "Nissan Sentra 2019" },
-            { id: 4, name: "Laura Sánchez", phone: "+1234567893", rating: 4.8, car: "Hyundai Elantra 2020" }
-        ];
+        const permissions = {
+            location: false,
+            notifications: false,
+            storage: false
+        };
         
-        document.getElementById('tab-form').addEventListener('click', function() {
-            showSection('form-section');
-            setActiveTab('tab-form');
+        const cubaBounds = L.latLngBounds(
+            L.latLng(19.8, -85.0),
+            L.latLng(23.3, -74.0)
+        );
+        
+        const cubaLocations = {
+            "La Habana": [23.1136, -82.3666],
+            "Santiago de Cuba": [20.0217, -75.8294],
+            "Camagüey": [21.3808, -77.9169],
+            "Holguín": [20.8872, -76.2631],
+            "Santa Clara": [22.4069, -79.9653]
+        };
+        
+        const drivers = {
+            moto: [
+                { id: 1, name: "Juan Pérez", phone: "+5351234567", rating: 4.7, vehicle: "Honda CBR 250", type: "moto", price: "5-10 CUP/km" },
+                { id: 2, name: "Roberto Díaz", phone: "+5351234568", rating: 4.5, vehicle: "Yamaha YBR 125", type: "moto", price: "4-8 CUP/km" }
+            ],
+            carro: [
+                { id: 3, name: "Carlos Mendoza", phone: "+5351234569", rating: 4.8, vehicle: "Toyota Corolla 2020", type: "carro", price: "15-25 CUP/km" },
+                { id: 4, name: "Ana Rodríguez", phone: "+5351234570", rating: 4.9, vehicle: "Honda Civic 2021", type: "carro", price: "18-28 CUP/km" }
+            ],
+            camioneta: [
+                { id: 5, name: "Miguel Torres", phone: "+5351234571", rating: 4.6, vehicle: "Nissan Vanette 2018", type: "camioneta", price: "25-40 CUP/km" },
+                { id: 6, name: "Laura Sánchez", phone: "+5351234572", rating: 4.7, vehicle: "Toyota Hiace 2019", type: "camioneta", price: "30-45 CUP/km" }
+            ]
+        };
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            checkExistingPermissions();
+            setupEventListeners();
+            setupVehicleSelection();
+            setupCargoSelection();
         });
         
-        document.getElementById('tab-drivers').addEventListener('click', function() {
-            if (validateForm()) {
-                showSection('drivers-section');
-                setActiveTab('tab-drivers');
-                loadDrivers();
+        function setupEventListeners() {
+            document.getElementById('tab-form').addEventListener('click', function() {
+                showSection('form-section');
+                setActiveTab('tab-form');
+            });
+            
+            document.getElementById('tab-drivers').addEventListener('click', function() {
+                if (validateForm()) {
+                    showSection('drivers-section');
+                    setActiveTab('tab-drivers');
+                    loadDrivers();
+                }
+            });
+            
+            document.getElementById('btn-continue').addEventListener('click', function() {
+                if (validateForm()) {
+                    showSection('drivers-section');
+                    setActiveTab('tab-drivers');
+                    loadDrivers();
+                }
+            });
+            
+            document.getElementById('btn-back').addEventListener('click', function() {
+                showSection('form-section');
+                setActiveTab('tab-form');
+            });
+            
+            document.getElementById('btn-map-origen').addEventListener('click', function() {
+                currentMapField = 'origen';
+                showMapModal();
+            });
+            
+            document.getElementById('btn-map-destino').addEventListener('click', function() {
+                currentMapField = 'destino';
+                showMapModal();
+            });
+            
+            document.getElementById('btn-current-origen').addEventListener('click', function() {
+                getCurrentLocation('origen');
+            });
+            
+            document.getElementById('btn-current-destino').addEventListener('click', function() {
+                getCurrentLocation('destino');
+            });
+            
+            document.getElementById('btn-auto-locate').addEventListener('click', function() {
+                startAutoLocation();
+            });
+            
+            document.getElementById('btn-confirm-location').addEventListener('click', function() {
+                confirmMapLocation();
+            });
+            
+            document.getElementById('btn-cancel-map').addEventListener('click', function() {
+                hideMapModal();
+            });
+            
+            document.getElementById('btn-confirm').addEventListener('click', function() {
+                if (!selectedDriver) {
+                    alert('Por favor selecciona un conductor');
+                    return;
+                }
+                sendWhatsApp();
+            });
+            
+            document.getElementById('btn-request-permissions').addEventListener('click', requestAllPermissions);
+            document.getElementById('btn-skip-permissions').addEventListener('click', hidePermissionBanner);
+        }
+        
+        function setupVehicleSelection() {
+            document.querySelectorAll('.vehicle-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    document.querySelectorAll('.vehicle-option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    this.classList.add('selected');
+                    vehicleType = this.dataset.type;
+                });
+            });
+        }
+        
+        function setupCargoSelection() {
+            document.querySelectorAll('.cargo-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    document.querySelectorAll('.cargo-option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    this.classList.add('selected');
+                    cargoType = this.dataset.cargo;
+                    
+                    const cargoDetailsGroup = document.getElementById('cargo-details-group');
+                    if (cargoType !== 'no') {
+                        cargoDetailsGroup.style.display = 'block';
+                    } else {
+                        cargoDetailsGroup.style.display = 'none';
+                    }
+                });
+            });
+        }
+        
+        function checkExistingPermissions() {
+            permissions.storage = checkStoragePermission();
+            updatePermissionStatus('storage', permissions.storage);
+            
+            if ('Notification' in window) {
+                permissions.notifications = Notification.permission === 'granted';
+                updatePermissionStatus('notifications', permissions.notifications);
             }
-        });
-        
-        document.getElementById('btn-continue').addEventListener('click', function() {
-            if (validateForm()) {
-                showSection('drivers-section');
-                setActiveTab('tab-drivers');
-                loadDrivers();
+            
+            if (navigator.permissions && navigator.permissions.query) {
+                navigator.permissions.query({name: 'geolocation'}).then(result => {
+                    permissions.location = result.state === 'granted';
+                    updatePermissionStatus('location', permissions.location);
+                });
             }
-        });
-        
-        document.getElementById('btn-back').addEventListener('click', function() {
-            showSection('form-section');
-            setActiveTab('tab-form');
-        });
-        
-        document.getElementById('btn-map-origen').addEventListener('click', function() {
-            currentMapField = 'origen';
-            showMapModal();
-        });
-        
-        document.getElementById('btn-map-destino').addEventListener('click', function() {
-            currentMapField = 'destino';
-            showMapModal();
-        });
-        
-        document.getElementById('btn-confirm-location').addEventListener('click', function() {
-            if (marker) {
-                const latlng = marker.getLatLng();
-                const address = `Lat: ${latlng.lat.toFixed(6)}, Lng: ${latlng.lng.toFixed(6)}`;
-                document.getElementById(currentMapField).value = address;
+            
+            if (permissions.location && permissions.notifications && permissions.storage) {
+                hidePermissionBanner();
             }
-            hideMapModal();
-        });
+        }
         
-        document.getElementById('btn-cancel-map').addEventListener('click', function() {
-            hideMapModal();
-        });
+        function checkStoragePermission() {
+            try {
+                localStorage.setItem('test', 'test');
+                localStorage.removeItem('test');
+                return true;
+            } catch (e) {
+                return false;
+            }
+        }
         
-        document.getElementById('btn-confirm').addEventListener('click', function() {
-            if (!selectedDriver) {
-                alert('Por favor selecciona un conductor');
+        function updatePermissionStatus(permission, granted) {
+            const indicator = document.getElementById(`${permission}-status`);
+            if (indicator) {
+                indicator.className = `status-indicator ${granted ? 'granted' : ''}`;
+            }
+            permissions[permission] = granted;
+        }
+        
+        async function requestAllPermissions() {
+            await requestLocationPermission();
+            await requestNotificationPermission();
+            await requestStoragePermission();
+            
+            setTimeout(hidePermissionBanner, 2000);
+        }
+        
+        function requestLocationPermission() {
+            return new Promise((resolve) => {
+                if (!navigator.geolocation) {
+                    resolve(false);
+                    return;
+                }
+                
+                navigator.geolocation.getCurrentPosition(
+                    () => {
+                        updatePermissionStatus('location', true);
+                        resolve(true);
+                    },
+                    () => {
+                        updatePermissionStatus('location', false);
+                        resolve(false);
+                    },
+                    { enableHighAccuracy: true, timeout: 5000 }
+                );
+            });
+        }
+        
+        function requestNotificationPermission() {
+            return new Promise((resolve) => {
+                if (!('Notification' in window)) {
+                    resolve(false);
+                    return;
+                }
+                
+                if (Notification.permission === 'granted') {
+                    updatePermissionStatus('notifications', true);
+                    resolve(true);
+                } else if (Notification.permission !== 'denied') {
+                    Notification.requestPermission().then(permission => {
+                        const granted = permission === 'granted';
+                        updatePermissionStatus('notifications', granted);
+                        
+                        if (granted) {
+                            showNotification('¡Gracias! Ahora recibirás actualizaciones de tu viaje.');
+                        }
+                        
+                        resolve(granted);
+                    });
+                } else {
+                    resolve(false);
+                }
+            });
+        }
+        
+        function requestStoragePermission() {
+            return new Promise((resolve) => {
+                try {
+                    const testKey = 'cubanride_test';
+                    localStorage.setItem(testKey, 'test');
+                    localStorage.removeItem(testKey);
+                    
+                    updatePermissionStatus('storage', true);
+                    
+                    saveUserPreferences();
+                    
+                    resolve(true);
+                } catch (e) {
+                    updatePermissionStatus('storage', false);
+                    resolve(false);
+                }
+            });
+        }
+        
+        function hidePermissionBanner() {
+            document.getElementById('permission-banner').style.display = 'none';
+        }
+        
+        function showNotification(message) {
+            if (permissions.notifications) {
+                new Notification('CubanRide', {
+                    body: message,
+                    icon: '🚗'
+                });
+            }
+        }
+        
+        function saveUserPreferences() {
+            if (permissions.storage) {
+                const preferences = {
+                    name: document.getElementById('nombre').value,
+                    phone: document.getElementById('telefono').value,
+                    vehicleType: vehicleType,
+                    lastUsed: new Date().toISOString()
+                };
+                localStorage.setItem('cubanride_preferences', JSON.stringify(preferences));
+            }
+        }
+        
+        function loadUserPreferences() {
+            if (permissions.storage) {
+                const saved = localStorage.getItem('cubanride_preferences');
+                if (saved) {
+                    const preferences = JSON.parse(saved);
+                    document.getElementById('nombre').value = preferences.name || '';
+                    document.getElementById('telefono').value = preferences.phone || '';
+                    
+                    if (preferences.vehicleType) {
+                        vehicleType = preferences.vehicleType;
+                        document.querySelectorAll('.vehicle-option').forEach(opt => {
+                            opt.classList.toggle('selected', opt.dataset.type === vehicleType);
+                        });
+                    }
+                }
+            }
+        }
+        
+        function startAutoLocation() {
+            if (!permissions.location) {
+                alert('Se necesita permiso de ubicación para usar la auto-localización');
+                requestLocationPermission();
                 return;
             }
             
-            sendWhatsApp();
-        });
+            if (watchId) {
+                navigator.geolocation.clearWatch(watchId);
+                watchId = null;
+                document.getElementById('btn-auto-locate').textContent = '🌍 Auto';
+                
+                if (userLocationMarker && map) {
+                    map.removeLayer(userLocationMarker);
+                    userLocationMarker = null;
+                }
+                return;
+            }
+            
+            document.getElementById('btn-auto-locate').textContent = '⏹️ Detener';
+            
+            watchId = navigator.geolocation.watchPosition(
+                function(position) {
+                    const lat = position.coords.latitude;
+                    const lng = position.coords.longitude;
+                    const userLocation = L.latLng(lat, lng);
+                    
+                    if (cubaBounds.contains(userLocation)) {
+                        if (userLocationMarker && map) {
+                            map.removeLayer(userLocationMarker);
+                        }
+                        
+                        userLocationMarker = L.marker([lat, lng], {
+                            icon: L.divIcon({
+                                className: 'auto-location-marker',
+                                iconSize: [16, 16]
+                            })
+                        }).addTo(map);
+                        
+                        map.setView([lat, lng], 15);
+                        
+                        reverseGeocode(lat, lng)
+                            .then(address => {
+                                document.getElementById('origen').value = address;
+                            })
+                            .catch(() => {
+                                document.getElementById('origen').value = `Lat: ${lat.toFixed(6)}, Lng: ${lng.toFixed(6)}`;
+                            });
+                    }
+                },
+                function(error) {
+                    console.error('Error en auto-localización:', error);
+                    alert('Error en auto-localización. Verifica tu conexión y permisos de ubicación.');
+                    stopAutoLocation();
+                },
+                {
+                    enableHighAccuracy: true,
+                    timeout: 10000,
+                    maximumAge: 0
+                }
+            );
+        }
+        
+        function stopAutoLocation() {
+            if (watchId) {
+                navigator.geolocation.clearWatch(watchId);
+                watchId = null;
+            }
+            document.getElementById('btn-auto-locate').textContent = '🌍 Auto';
+        }
         
         function showSection(sectionId) {
             document.getElementById('form-section').classList.add('hidden');
@@ -335,6 +894,14 @@
                 return false;
             }
             
+            const phoneRegex = /^(\+53\s?)?5\d{7}$/;
+            const cleanedPhone = telefono.replace(/\s/g, '');
+            
+            if (!phoneRegex.test(cleanedPhone)) {
+                alert('Por favor ingresa un número de teléfono cubano válido (ej: +53 5xxx xxxx)');
+                return false;
+            }
+            
             return true;
         }
         
@@ -342,7 +909,14 @@
             const driverList = document.getElementById('driver-list');
             driverList.innerHTML = '';
             
-            drivers.forEach(driver => {
+            const availableDrivers = drivers[vehicleType] || [];
+            
+            if (availableDrivers.length === 0) {
+                driverList.innerHTML = '<div style="text-align: center; padding: 15px; color: #666;">No hay conductores disponibles para este tipo de vehículo</div>';
+                return;
+            }
+            
+            availableDrivers.forEach(driver => {
                 const driverCard = document.createElement('div');
                 driverCard.className = 'driver-card';
                 driverCard.dataset.id = driver.id;
@@ -351,8 +925,8 @@
                     <div class="driver-avatar">👤</div>
                     <div class="driver-info">
                         <div class="driver-name">${driver.name}</div>
-                        <div class="driver-rating">⭐ ${driver.rating}</div>
-                        <div>${driver.car}</div>
+                        <div class="driver-rating">⭐ ${driver.rating} | ${driver.price}</div>
+                        <div class="driver-car">${driver.vehicle}</div>
                     </div>
                 `;
                 
@@ -370,7 +944,7 @@
         
         function showMapModal() {
             document.getElementById('map-modal').classList.remove('hidden');
-            document.getElementById('map-title').textContent = `Selecciona ubicación de ${currentMapField}`;
+            document.getElementById('map-title').textContent = `Selecciona ubicación de ${currentMapField} en Cuba`;
             
             if (!map) {
                 initMap();
@@ -379,21 +953,112 @@
         
         function hideMapModal() {
             document.getElementById('map-modal').classList.add('hidden');
+            stopAutoLocation();
         }
         
         function initMap() {
-            map = L.map('map').setView([19.4326, -99.1332], 13);
+            map = L.map('map', {
+                maxBounds: cubaBounds,
+                maxBoundsViscosity: 1.0
+            }).setView([21.5218, -77.7812], 7);
             
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '© OpenStreetMap contributors'
             }).addTo(map);
             
+            Object.keys(cubaLocations).forEach(city => {
+                const coords = cubaLocations[city];
+                L.marker(coords)
+                    .bindPopup(`<b>${city}</b>`)
+                    .addTo(map);
+            });
+            
             map.on('click', function(e) {
-                if (marker) {
-                    map.removeLayer(marker);
+                if (cubaBounds.contains(e.latlng)) {
+                    if (marker) {
+                        map.removeLayer(marker);
+                    }
+                    marker = L.marker(e.latlng).addTo(map);
+                } else {
+                    alert('Por favor, selecciona una ubicación dentro del territorio cubano.');
                 }
+            });
+            
+            map.setMaxBounds(cubaBounds);
+        }
+        
+        function getCurrentLocation(field) {
+            if (!permissions.location) {
+                alert('Se necesita permiso de ubicación');
+                requestLocationPermission();
+                return;
+            }
+            
+            if (!navigator.geolocation) {
+                alert('La geolocalización no es compatible con este navegador');
+                return;
+            }
+            
+            navigator.geolocation.getCurrentPosition(
+                function(position) {
+                    const lat = position.coords.latitude;
+                    const lng = position.coords.longitude;
+                    const userLocation = L.latLng(lat, lng);
+                    
+                    if (cubaBounds.contains(userLocation)) {
+                        reverseGeocode(lat, lng)
+                            .then(address => {
+                                document.getElementById(field).value = address;
+                            })
+                            .catch(() => {
+                                document.getElementById(field).value = `Lat: ${lat.toFixed(6)}, Lng: ${lng.toFixed(6)}`;
+                            });
+                    } else {
+                        alert('Tu ubicación actual está fuera de Cuba. Por favor, usa el mapa para seleccionar una ubicación dentro del territorio cubano.');
+                    }
+                },
+                function(error) {
+                    alert('No se pudo obtener tu ubicación. Por favor, usa el mapa para seleccionar manualmente.');
+                }
+            );
+        }
+        
+        function confirmMapLocation() {
+            if (marker) {
+                const latlng = marker.getLatLng();
                 
-                marker = L.marker(e.latlng).addTo(map);
+                if (cubaBounds.contains(latlng)) {
+                    reverseGeocode(latlng.lat, latlng.lng)
+                        .then(address => {
+                            document.getElementById(currentMapField).value = address;
+                        })
+                        .catch(() => {
+                            document.getElementById(currentMapField).value = `Lat: ${latlng.lat.toFixed(6)}, Lng: ${latlng.lng.toFixed(6)}`;
+                        });
+                } else {
+                    alert('La ubicación seleccionada está fuera del territorio cubano. Por favor, selecciona una ubicación dentro de Cuba.');
+                    return;
+                }
+            }
+            hideMapModal();
+        }
+        
+        function reverseGeocode(lat, lng) {
+            return new Promise((resolve, reject) => {
+                const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`;
+                
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data && data.display_name) {
+                            resolve(data.display_name);
+                        } else {
+                            reject('No se pudo obtener la dirección');
+                        }
+                    })
+                    .catch(() => {
+                        reject('Error en la geocodificación');
+                    });
             });
         }
         
@@ -404,6 +1069,7 @@
             const destino = document.getElementById('destino').value;
             const fecha = document.getElementById('fecha').value;
             const hora = document.getElementById('hora').value;
+            const cargoDetails = document.getElementById('cargo-details').value;
             
             const fechaObj = new Date(fecha);
             const fechaFormateada = fechaObj.toLocaleDateString('es-ES', {
@@ -413,22 +1079,58 @@
                 day: 'numeric'
             });
             
-            const mensaje = `Hola ${selectedDriver.name}, solicito un taxi con la siguiente información:%0A%0A` +
-                           `*Nombre:* ${nombre}%0A` +
-                           `*Teléfono:* ${telefono}%0A` +
-                           `*Origen:* ${origen || 'No especificado'}%0A` +
-                           `*Destino:* ${destino || 'No especificado'}%0A` +
-                           `*Fecha:* ${fechaFormateada}%0A` +
-                           `*Hora:* ${hora}%0A%0A` +
-                           `Por favor, confirme mi solicitud. ¡Gracias!`;
+            let mensaje = `Hola ${selectedDriver.name}, solicito un taxi con CubanRide:%0A%0A` +
+                         `*Nombre:* ${nombre}%0A` +
+                         `*Teléfono:* ${telefono}%0A` +
+                         `*Vehículo:* ${getVehicleTypeName(vehicleType)}%0A` +
+                         `*Origen:* ${origen || 'No especificado'}%0A` +
+                         `*Destino:* ${destino || 'No especificado'}%0A` +
+                         `*Servicio de Carga:* ${getCargoTypeName(cargoType)}%0A`;
+            
+            if (cargoType !== 'no' && cargoDetails) {
+                mensaje += `*Detalles de Carga:* ${cargoDetails}%0A`;
+            }
+            
+            mensaje += `*Fecha:* ${fechaFormateada}%0A` +
+                      `*Hora:* ${hora}%0A%0A` +
+                      `Por favor, confirme mi solicitud. ¡Gracias!`;
             
             const urlWhatsApp = `https://wa.me/${selectedDriver.phone}?text=${mensaje}`;
             
             window.open(urlWhatsApp, '_blank');
+            
+            if (permissions.notifications) {
+                showNotification(`Solicitud enviada a ${selectedDriver.name}`);
+            }
+        }
+        
+        function getVehicleTypeName(type) {
+            const names = {
+                'moto': 'Moto',
+                'carro': 'Carro',
+                'camioneta': 'Camioneta'
+            };
+            return names[type] || type;
+        }
+        
+        function getCargoTypeName(type) {
+            const names = {
+                'no': 'No',
+                'pequena': 'Carga Pequeña',
+                'grande': 'Carga Grande'
+            };
+            return names[type] || type;
         }
         
         const today = new Date().toISOString().split('T')[0];
         document.getElementById('fecha').setAttribute('min', today);
+        
+        const now = new Date();
+        now.setHours(now.getHours() + 1);
+        const nextHour = now.getHours().toString().padStart(2, '0') + ':00';
+        document.getElementById('hora').value = nextHour;
+        
+        loadUserPreferences();
     </script>
 </body>
 </html>

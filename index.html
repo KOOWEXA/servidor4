@@ -23,22 +23,28 @@
         body {
             background-color: var(--light);
             color: var(--dark);
-            line-height: 1.5;
+            line-height: 1.4;
         }
         
         .container {
-            width: 90%;
-            max-width: 1100px;
+            width: 95%;
+            max-width: 1000px;
             margin: 0 auto;
-            padding: 0 15px;
+            padding: 0 10px;
+        }
+        
+        .banner {
+            width: 100%;
+            height: 200px;
+            background-image: url('https://images.unsplash.com/photo-1600891964092-4316c288032e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
         }
         
         header {
-            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1600891964092-4316c288032e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
-            background-size: cover;
-            background-position: center;
+            background: var(--dark);
             color: white;
-            padding: 60px 0;
+            padding: 20px 0;
             text-align: center;
         }
         
@@ -46,28 +52,28 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
         
         .logo-img {
-            width: 80px;
-            height: 80px;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
             object-fit: cover;
-            border: 3px solid var(--secondary);
-            margin-right: 15px;
+            border: 2px solid var(--secondary);
+            margin-right: 10px;
         }
         
         .logo-text {
-            font-size: 2rem;
+            font-size: 1.6rem;
             font-weight: 700;
             color: var(--secondary);
         }
         
         .tagline {
-            font-size: 1.1rem;
-            margin-bottom: 25px;
-            max-width: 600px;
+            font-size: 1rem;
+            margin-bottom: 15px;
+            max-width: 500px;
             margin-left: auto;
             margin-right: auto;
         }
@@ -76,18 +82,13 @@
             display: inline-block;
             background-color: var(--primary);
             color: white;
-            padding: 10px 25px;
-            border-radius: 30px;
+            padding: 8px 20px;
+            border-radius: 20px;
             text-decoration: none;
             font-weight: 600;
-            transition: all 0.3s ease;
             border: 2px solid var(--primary);
-            margin: 5px;
-        }
-        
-        .btn:hover {
-            background-color: transparent;
-            color: var(--primary);
+            margin: 3px;
+            font-size: 0.9rem;
         }
         
         .btn-secondary {
@@ -96,185 +97,177 @@
             color: var(--secondary);
         }
         
-        .btn-secondary:hover {
-            background-color: var(--secondary);
-            color: var(--dark);
-        }
-        
         section {
-            padding: 50px 0;
+            padding: 25px 0;
         }
         
         .section-title {
             text-align: center;
-            margin-bottom: 35px;
-            position: relative;
+            margin-bottom: 20px;
         }
         
         .section-title h2 {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             color: var(--primary);
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
         
         .section-title::after {
             content: '';
             display: block;
-            width: 60px;
-            height: 3px;
+            width: 50px;
+            height: 2px;
             background-color: var(--secondary);
             margin: 0 auto;
         }
         
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-        }
-        
-        .service-card {
-            background-color: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            transition: transform 0.3s ease;
-        }
-        
-        .service-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .service-img {
-            height: 180px;
-            background-size: cover;
-            background-position: center;
-        }
-        
-        .service-content {
-            padding: 20px;
-        }
-        
-        .service-content h3 {
-            margin-bottom: 10px;
-            color: var(--primary);
-        }
-        
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
+            grid-template-columns: 1fr;
+            gap: 15px;
         }
         
-        .product-card {
+        .category {
             background-color: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            text-align: center;
-            padding: 20px 15px;
-            transition: all 0.3s ease;
+            border-radius: 6px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+            padding: 15px;
         }
         
-        .product-card:hover {
-            transform: scale(1.03);
-        }
-        
-        .product-icon {
-            font-size: 2rem;
+        .category-title {
+            font-size: 1.2rem;
             color: var(--primary);
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+            text-align: center;
+            border-bottom: 1px solid var(--secondary);
+            padding-bottom: 8px;
+        }
+        
+        .product-item {
+            padding: 6px 0;
+            border-bottom: 1px solid #eee;
+            font-size: 0.9rem;
+        }
+        
+        .product-item:last-child {
+            border-bottom: none;
         }
         
         .benefits {
             background-color: var(--dark);
             color: white;
+            padding: 20px 0;
         }
         
         .benefits-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
         }
         
         .benefit-item {
             text-align: center;
-            padding: 15px;
+            padding: 10px;
         }
         
         .benefit-icon {
-            font-size: 2rem;
+            font-size: 1.5rem;
             color: var(--secondary);
-            margin-bottom: 15px;
+            margin-bottom: 10px;
+        }
+        
+        .benefit-item h3 {
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+        
+        .benefit-item p {
+            font-size: 0.85rem;
         }
         
         .cta {
-            background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
-            background-size: cover;
-            background-position: center;
+            background: var(--dark);
             color: white;
             text-align: center;
-            padding: 60px 0;
+            padding: 25px 0;
         }
         
         .cta h2 {
-            font-size: 2rem;
-            margin-bottom: 15px;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
         }
         
         .cta p {
-            max-width: 600px;
-            margin: 0 auto 25px;
-            font-size: 1rem;
+            max-width: 500px;
+            margin: 0 auto 15px;
+            font-size: 0.9rem;
         }
         
         .whatsapp-float {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
+            bottom: 15px;
+            right: 15px;
             background-color: #25D366;
             color: white;
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.8rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            font-size: 1.5rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
             z-index: 1000;
-            transition: all 0.3s ease;
             text-decoration: none;
         }
         
-        .whatsapp-float:hover {
-            transform: scale(1.1);
-            background-color: #128C7E;
+        .info-note {
+            background-color: #f9f9f9;
+            border-left: 3px solid var(--secondary);
+            padding: 12px;
+            margin-top: 15px;
+            font-size: 0.85rem;
+        }
+        
+        .whatsapp-btn {
+            background-color: #25D366;
+            border-color: #25D366;
         }
         
         @media (max-width: 768px) {
+            .banner {
+                height: 150px;
+            }
+            
             header {
-                padding: 40px 0;
+                padding: 15px 0;
             }
             
             .logo-text {
-                font-size: 1.6rem;
+                font-size: 1.3rem;
             }
             
             section {
-                padding: 40px 0;
+                padding: 20px 0;
             }
             
             .section-title h2 {
-                font-size: 1.5rem;
+                font-size: 1.3rem;
             }
             
             .cta h2 {
-                font-size: 1.6rem;
+                font-size: 1.3rem;
+            }
+            
+            .benefits-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
+    <div class="banner"></div>
+    
     <header>
         <div class="container">
             <div class="logo-container">
@@ -287,38 +280,6 @@
         </div>
     </header>
 
-    <section id="services">
-        <div class="container">
-            <div class="section-title">
-                <h2>Nuestros Servicios</h2>
-                <p>Calidad y conveniencia para su experiencia culinaria</p>
-            </div>
-            <div class="services-grid">
-                <div class="service-card">
-                    <div class="service-img" style="background-image: url('https://images.unsplash.com/photo-1546833999-b9f581a1996d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');"></div>
-                    <div class="service-content">
-                        <h3>Productos Listos para Usar</h3>
-                        <p>Todos nuestros productos llegan previamente empaquetados, limpios y listos para su elaboración, ahorrándole tiempo y esfuerzo.</p>
-                    </div>
-                </div>
-                <div class="service-card">
-                    <div class="service-img" style="background-image: url('https://images.unsplash.com-1607623814075-e51df1bdc82f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');"></div>
-                    <div class="service-content">
-                        <h3>Procesamiento Profesional</h3>
-                        <p>Nos encargamos del procesamiento, limpieza y preparación de carnes, pescados y mariscos, garantizando máxima seguridad e higiene.</p>
-                    </div>
-                </div>
-                <div class="service-card">
-                    <div class="service-img" style="background-image: url('https://images.unsplash.com/photo-1579113800032-c38bd7635818?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');"></div>
-                    <div class="service-content">
-                        <h3>Entrega a Domicilio</h3>
-                        <p>Mensajería disponible en toda La Habana para llevar sus pedidos directamente a su puerta con la máxima frescura.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <section id="products">
         <div class="container">
             <div class="section-title">
@@ -326,30 +287,55 @@
                 <p>Selección premium de carnes, mariscos y especialidades</p>
             </div>
             <div class="products-grid">
-                <div class="product-card">
-                    <div class="product-icon">🥩</div>
-                    <h3>Cortes de Res</h3>
-                    <p>Los mejores cortes seleccionados para satisfacer los paladares más exigentes.</p>
+                <div class="category">
+                    <h3 class="category-title">*OFERTAS DEL DÍA*</h3>
                 </div>
-                <div class="product-card">
-                    <div class="product-icon">🐖</div>
-                    <h3>Cerdo Premium</h3>
-                    <p>Chuletas y especialidades porcinas de la más alta calidad.</p>
+                
+                <div class="category">
+                    <h3 class="category-title">*DEL POLLO*</h3>
+                    <div class="product-item">🔖 Alitas de Pollo 5lb *$3300</div>
+                    <div class="product-item">🔖 Masa Cárnica original de prodal 1 kg *$1200</div>
                 </div>
-                <div class="product-card">
-                    <div class="product-icon">🐟</div>
-                    <h3>Pescados y Mariscos</h3>
-                    <p>Frescos y limpios, listos para preparar sus platos favoritos.</p>
+                
+                <div class="category">
+                    <h3 class="category-title">*DEL CERDO*</h3>
+                    <div class="product-item">🔖 Troceado de cerdo 1kg *3600</div>
+                    <div class="product-item">🔖 Lomo lasqueado 1kg *3500</div>
                 </div>
-                <div class="product-card">
-                    <div class="product-icon">🧀</div>
-                    <h3>Quesos Selectos</h3>
-                    <p>Incluyendo nuestro exclusivo queso Gouda y otras variedades.</p>
+                
+                <div class="category">
+                    <h3 class="category-title">*AHUMADO*</h3>
+                    <div class="product-item">🔖 Lomo ahumado 1kg *$3300</div>
                 </div>
-                <div class="product-card">
-                    <div class="product-icon">🥓</div>
-                    <h3>Productos Variados</h3>
-                    <p>Mezclas mixtas y especialidades para todos los gustos.</p>
+                
+                <div class="category">
+                    <h3 class="category-title">*DE RES*</h3>
+                    <div class="product-item">🔖 Boliche de Res 5lb *$9000</div>
+                    <div class="product-item">🔖 Filetes de res 2kg *$9000</div>
+                    <div class="product-item">🔖 Lomo de Res 2kg *$8700</div>
+                    <div class="product-item">🔖 Bistec de res 1kg *$4750</div>
+                    <div class="product-item">🔖 Troceado de res 1kg *$4500</div>
+                    <div class="product-item">🔖 Carne molida de res 1kg *$2800</div>
+                    <div class="product-item">🔖 Bistec de Hígado de res 1kg *$2600</div>
+                </div>
+                
+                <div class="category">
+                    <h3 class="category-title">*DEL MAR*</h3>
+                    <div class="product-item">🔖 Ruedas de Bonito 1kg *$3000</div>
+                    <div class="product-item">🔖 Filetes de Sobaco 1kg *$3300</div>
+                </div>
+                
+                <div class="category">
+                    <h3 class="category-title">*Variados Mixtos*</h3>
+                    <div class="product-item">🔖 Aceite de Oliva Extra Virgen 250 ml *$1800</div>
+                    <div class="product-item">🔖 Potagin 500g *$1700</div>
+                    <div class="product-item">🔖 Galón de Aceite Refinado (no es sellado) 5lt *$5800</div>
+                </div>
+                
+                <div class="info-note">
+                    <p><strong>* Todos los paquetes son sellados al vacío y etiquetados</strong></p>
+                    <p><strong>* Mínimo de compra 10 x cada producto</strong></p>
+                    <p><strong>* Se entrega Factura</strong></p>
                 </div>
             </div>
         </div>
@@ -365,22 +351,22 @@
                 <div class="benefit-item">
                     <div class="benefit-icon">💳</div>
                     <h3>Múltiples Formas de Pago</h3>
-                    <p>Aceptamos MN (efectivo y transferencia), MLC, USD, EUR y Zelle para su comodidad.</p>
+                    <p>Aceptamos MN, MLC, USD, EUR y Zelle</p>
                 </div>
                 <div class="benefit-item">
                     <div class="benefit-icon">📄</div>
                     <h3>Documentación Completa</h3>
-                    <p>Emitimos facturas o comprobantes para todas sus compras, especialmente por volumen.</p>
+                    <p>Facturas y comprobantes para todas sus compras</p>
                 </div>
                 <div class="benefit-item">
                     <div class="benefit-icon">🚚</div>
                     <h3>Entrega Garantizada</h3>
-                    <p>Servicio de mensajería confiable a cualquier lugar de La Habana.</p>
+                    <p>Mensajería confiable en toda La Habana</p>
                 </div>
                 <div class="benefit-item">
                     <div class="benefit-icon">👨‍🍳</div>
-                    <h3>Experiencia Simplificada</h3>
-                    <p>Productos listos para usar, haciendo que cocinar sea un placer, no una carga.</p>
+                    <h3>Productos Listos</h3>
+                    <p>Listos para usar, sellados al vacío</p>
                 </div>
             </div>
         </div>
@@ -389,12 +375,12 @@
     <section class="cta" id="contact">
         <div class="container">
             <h2>Convierta cada comida en una experiencia</h2>
-            <p>En Cárnicos Habana, cocinar deja de ser una carga para convertirse en una inspiración. Únase a nuestra comunidad de clientes satisfechos.</p>
-            <a href="https://wa.me/message/58692631" class="btn">Contactar por WhatsApp</a>
+            <p>Productos de calidad listos para inspirar su próxima creación culinaria</p>
+            <a href="https://wa.me/message/58692631?text=¡Hola! Me interesa en lo que oferta Cárnicos Habana" class="btn whatsapp-btn">Contactar por WhatsApp</a>
             <a href="https://chat.whatsapp.com/JiS0roECwUh1Tkh7sXjJAK?mode=ems_copy_t" class="btn btn-secondary">Unirse al Grupo</a>
         </div>
     </section>
 
-    <a href="https://wa.me/message/58692631" class="whatsapp-float" target="_blank">💬</a>
+    <a href="https://wa.me/message/58692631?text=¡Hola! Me interesa en lo que oferta Cárnicos Habana" class="whatsapp-float" target="_blank">💬</a>
 </body>
 </html>

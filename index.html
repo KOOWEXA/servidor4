@@ -89,6 +89,7 @@
             border: 2px solid var(--primary);
             margin: 3px;
             font-size: 0.9rem;
+            cursor: pointer;
         }
         
         .btn-secondary {
@@ -144,6 +145,8 @@
         }
         
         .product-item {
+            display: flex;
+            justify-content: space-between;
             padding: 6px 0;
             border-bottom: 1px solid #eee;
             font-size: 0.9rem;
@@ -234,6 +237,137 @@
             border-color: #25D366;
         }
         
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            z-index: 2000;
+            overflow-y: auto;
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 20px auto;
+            width: 95%;
+            max-width: 800px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            padding: 20px;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+        
+        .modal-title {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .close-modal {
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray);
+        }
+        
+        .order-summary {
+            background-color: #f9f9f9;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .order-total {
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-align: right;
+            margin-top: 10px;
+            color: var(--primary);
+        }
+        
+        .customer-form {
+            margin-top: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+        
+        .product-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .product-name {
+            flex: 1;
+        }
+        
+        .product-price {
+            width: 80px;
+            text-align: right;
+            margin-right: 15px;
+        }
+        
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+        }
+        
+        .quantity-btn {
+            width: 30px;
+            height: 30px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .quantity-input {
+            width: 50px;
+            height: 30px;
+            text-align: center;
+            margin: 0 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .submit-order {
+            background-color: #25D366;
+            border-color: #25D366;
+            width: 100%;
+            padding: 12px;
+            font-size: 1rem;
+            margin-top: 20px;
+        }
+        
         @media (max-width: 768px) {
             .banner {
                 height: 150px;
@@ -262,6 +396,20 @@
             .benefits-grid {
                 grid-template-columns: 1fr;
             }
+            
+            .product-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .product-price {
+                text-align: left;
+                margin: 5px 0;
+            }
+            
+            .quantity-controls {
+                margin-top: 5px;
+            }
         }
     </style>
 </head>
@@ -275,7 +423,7 @@
                 <div class="logo-text">CÁRNICOS HABANA</div>
             </div>
             <p class="tagline">Descubra la excelencia en ingredientes seleccionados. Productos nacionales e importados, listos para su uso.</p>
-            <a href="#contact" class="btn">Hacer Pedido</a>
+            <button id="openOrderModal" class="btn">Hacer Pedido</button>
             <a href="#products" class="btn btn-secondary">Ver Productos</a>
         </div>
     </header>
@@ -293,43 +441,94 @@
                 
                 <div class="category">
                     <h3 class="category-title">*DEL POLLO*</h3>
-                    <div class="product-item">🔖 Alitas de Pollo 5lb *$3300</div>
-                    <div class="product-item">🔖 Masa Cárnica original de prodal 1 kg *$1200</div>
+                    <div class="product-item">
+                        <span>Alitas de Pollo 5lb</span>
+                        <span>*$3300</span>
+                    </div>
+                    <div class="product-item">
+                        <span>Masa Cárnica original de prodal 1 kg</span>
+                        <span>*$1200</span>
+                    </div>
                 </div>
                 
                 <div class="category">
                     <h3 class="category-title">*DEL CERDO*</h3>
-                    <div class="product-item">🔖 Troceado de cerdo 1kg *3600</div>
-                    <div class="product-item">🔖 Lomo lasqueado 1kg *3500</div>
+                    <div class="product-item">
+                        <span>Troceado de cerdo 1kg</span>
+                        <span>*3600</span>
+                    </div>
+                    <div class="product-item">
+                        <span>Lomo lasqueado 1kg</span>
+                        <span>*3500</span>
+                    </div>
                 </div>
                 
                 <div class="category">
                     <h3 class="category-title">*AHUMADO*</h3>
-                    <div class="product-item">🔖 Lomo ahumado 1kg *$3300</div>
+                    <div class="product-item">
+                        <span>Lomo ahumado 1kg</span>
+                        <span>*$3300</span>
+                    </div>
                 </div>
                 
                 <div class="category">
                     <h3 class="category-title">*DE RES*</h3>
-                    <div class="product-item">🔖 Boliche de Res 5lb *$9000</div>
-                    <div class="product-item">🔖 Filetes de res 2kg *$9000</div>
-                    <div class="product-item">🔖 Lomo de Res 2kg *$8700</div>
-                    <div class="product-item">🔖 Bistec de res 1kg *$4750</div>
-                    <div class="product-item">🔖 Troceado de res 1kg *$4500</div>
-                    <div class="product-item">🔖 Carne molida de res 1kg *$2800</div>
-                    <div class="product-item">🔖 Bistec de Hígado de res 1kg *$2600</div>
+                    <div class="product-item">
+                        <span>Boliche de Res 5lb</span>
+                        <span>*$9000</span>
+                    </div>
+                    <div class="product-item">
+                        <span>Filetes de res 2kg</span>
+                        <span>*$9000</span>
+                    </div>
+                    <div class="product-item">
+                        <span>Lomo de Res 2kg</span>
+                        <span>*$8700</span>
+                    </div>
+                    <div class="product-item">
+                        <span>Bistec de res 1kg</span>
+                        <span>*$4750</span>
+                    </div>
+                    <div class="product-item">
+                        <span>Troceado de res 1kg</span>
+                        <span>*$4500</span>
+                    </div>
+                    <div class="product-item">
+                        <span>Carne molida de res 1kg</span>
+                        <span>*$2800</span>
+                    </div>
+                    <div class="product-item">
+                        <span>Bistec de Hígado de res 1kg</span>
+                        <span>*$2600</span>
+                    </div>
                 </div>
                 
                 <div class="category">
                     <h3 class="category-title">*DEL MAR*</h3>
-                    <div class="product-item">🔖 Ruedas de Bonito 1kg *$3000</div>
-                    <div class="product-item">🔖 Filetes de Sobaco 1kg *$3300</div>
+                    <div class="product-item">
+                        <span>Ruedas de Bonito 1kg</span>
+                        <span>*$3000</span>
+                    </div>
+                    <div class="product-item">
+                        <span>Filetes de Sobaco 1kg</span>
+                        <span>*$3300</span>
+                    </div>
                 </div>
                 
                 <div class="category">
                     <h3 class="category-title">*Variados Mixtos*</h3>
-                    <div class="product-item">🔖 Aceite de Oliva Extra Virgen 250 ml *$1800</div>
-                    <div class="product-item">🔖 Potagin 500g *$1700</div>
-                    <div class="product-item">🔖 Galón de Aceite Refinado (no es sellado) 5lt *$5800</div>
+                    <div class="product-item">
+                        <span>Aceite de Oliva Extra Virgen 250 ml</span>
+                        <span>*$1800</span>
+                    </div>
+                    <div class="product-item">
+                        <span>Potagin 500g</span>
+                        <span>*$1700</span>
+                    </div>
+                    <div class="product-item">
+                        <span>Galón de Aceite Refinado (no es sellado) 5lt</span>
+                        <span>*$5800</span>
+                    </div>
                 </div>
                 
                 <div class="info-note">
@@ -376,11 +575,248 @@
         <div class="container">
             <h2>Convierta cada comida en una experiencia</h2>
             <p>Productos de calidad listos para inspirar su próxima creación culinaria</p>
-            <a href="https://wa.me/message/58692631?text=¡Hola! Me interesa en lo que oferta Cárnicos Habana" class="btn whatsapp-btn">Contactar por WhatsApp</a>
+            <button id="openOrderModal2" class="btn whatsapp-btn">Hacer Pedido</button>
             <a href="https://chat.whatsapp.com/JiS0roECwUh1Tkh7sXjJAK?mode=ems_copy_t" class="btn btn-secondary">Unirse al Grupo</a>
         </div>
     </section>
 
+    <div id="orderModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Realizar Pedido</h2>
+                <span class="close-modal">&times;</span>
+            </div>
+            
+            <div class="order-summary">
+                <h3>Resumen del Pedido</h3>
+                <div id="orderItems"></div>
+                <div class="order-total">Total: $<span id="totalAmount">0</span></div>
+            </div>
+            
+            <div class="customer-form">
+                <h3>Información del Cliente</h3>
+                <div class="form-group">
+                    <label for="customerName">Nombre completo</label>
+                    <input type="text" id="customerName" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="customerPhone">Teléfono</label>
+                    <input type="tel" id="customerPhone" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="customerAddress">Dirección de entrega</label>
+                    <input type="text" id="customerAddress" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="customerNotes">Notas adicionales</label>
+                    <textarea id="customerNotes" class="form-control" rows="3"></textarea>
+                </div>
+                
+                <button id="submitOrder" class="btn submit-order">Enviar Pedido por WhatsApp</button>
+            </div>
+        </div>
+    </div>
+
     <a href="https://wa.me/message/58692631?text=¡Hola! Me interesa en lo que oferta Cárnicos Habana" class="whatsapp-float" target="_blank">💬</a>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const modal = document.getElementById('orderModal');
+            const openOrderModalBtn = document.getElementById('openOrderModal');
+            const openOrderModalBtn2 = document.getElementById('openOrderModal2');
+            const closeModalBtn = document.querySelector('.close-modal');
+            const orderItemsContainer = document.getElementById('orderItems');
+            const totalAmountElement = document.getElementById('totalAmount');
+            const submitOrderBtn = document.getElementById('submitOrder');
+            
+            const products = [
+                { name: "Alitas de Pollo 5lb", price: 3300, category: "DEL POLLO" },
+                { name: "Masa Cárnica original de prodal 1 kg", price: 1200, category: "DEL POLLO" },
+                { name: "Troceado de cerdo 1kg", price: 3600, category: "DEL CERDO" },
+                { name: "Lomo lasqueado 1kg", price: 3500, category: "DEL CERDO" },
+                { name: "Lomo ahumado 1kg", price: 3300, category: "AHUMADO" },
+                { name: "Boliche de Res 5lb", price: 9000, category: "DE RES" },
+                { name: "Filetes de res 2kg", price: 9000, category: "DE RES" },
+                { name: "Lomo de Res 2kg", price: 8700, category: "DE RES" },
+                { name: "Bistec de res 1kg", price: 4750, category: "DE RES" },
+                { name: "Troceado de res 1kg", price: 4500, category: "DE RES" },
+                { name: "Carne molida de res 1kg", price: 2800, category: "DE RES" },
+                { name: "Bistec de Hígado de res 1kg", price: 2600, category: "DE RES" },
+                { name: "Ruedas de Bonito 1kg", price: 3000, category: "DEL MAR" },
+                { name: "Filetes de Sobaco 1kg", price: 3300, category: "DEL MAR" },
+                { name: "Aceite de Oliva Extra Virgen 250 ml", price: 1800, category: "VARIADOS MIXTOS" },
+                { name: "Potagin 500g", price: 1700, category: "VARIADOS MIXTOS" },
+                { name: "Galón de Aceite Refinado (no es sellado) 5lt", price: 5800, category: "VARIADOS MIXTOS" }
+            ];
+            
+            let order = {};
+            
+            function openModal() {
+                modal.style.display = 'block';
+                renderOrderForm();
+            }
+            
+            function closeModal() {
+                modal.style.display = 'none';
+            }
+            
+            openOrderModalBtn.addEventListener('click', openModal);
+            openOrderModalBtn2.addEventListener('click', openModal);
+            closeModalBtn.addEventListener('click', closeModal);
+            
+            window.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    closeModal();
+                }
+            });
+            
+            function renderOrderForm() {
+                orderItemsContainer.innerHTML = '';
+                
+                const categories = [...new Set(products.map(product => product.category))];
+                
+                categories.forEach(category => {
+                    const categoryTitle = document.createElement('h4');
+                    categoryTitle.textContent = `*${category}*`;
+                    categoryTitle.style.marginTop = '15px';
+                    categoryTitle.style.marginBottom = '10px';
+                    categoryTitle.style.color = 'var(--primary)';
+                    orderItemsContainer.appendChild(categoryTitle);
+                    
+                    const categoryProducts = products.filter(product => product.category === category);
+                    
+                    categoryProducts.forEach(product => {
+                        const productRow = document.createElement('div');
+                        productRow.className = 'product-row';
+                        
+                        const productName = document.createElement('div');
+                        productName.className = 'product-name';
+                        productName.textContent = product.name;
+                        
+                        const productPrice = document.createElement('div');
+                        productPrice.className = 'product-price';
+                        productPrice.textContent = `$${product.price}`;
+                        
+                        const quantityControls = document.createElement('div');
+                        quantityControls.className = 'quantity-controls';
+                        
+                        const decreaseBtn = document.createElement('button');
+                        decreaseBtn.className = 'quantity-btn';
+                        decreaseBtn.textContent = '-';
+                        decreaseBtn.addEventListener('click', () => updateQuantity(product.name, -1));
+                        
+                        const quantityInput = document.createElement('input');
+                        quantityInput.type = 'number';
+                        quantityInput.className = 'quantity-input';
+                        quantityInput.value = order[product.name] || 0;
+                        quantityInput.min = 0;
+                        quantityInput.addEventListener('change', (e) => {
+                            updateQuantity(product.name, parseInt(e.target.value) - (order[product.name] || 0));
+                        });
+                        
+                        const increaseBtn = document.createElement('button');
+                        increaseBtn.className = 'quantity-btn';
+                        increaseBtn.textContent = '+';
+                        increaseBtn.addEventListener('click', () => updateQuantity(product.name, 1));
+                        
+                        quantityControls.appendChild(decreaseBtn);
+                        quantityControls.appendChild(quantityInput);
+                        quantityControls.appendChild(increaseBtn);
+                        
+                        productRow.appendChild(productName);
+                        productRow.appendChild(productPrice);
+                        productRow.appendChild(quantityControls);
+                        
+                        orderItemsContainer.appendChild(productRow);
+                    });
+                });
+                
+                updateTotal();
+            }
+            
+            function updateQuantity(productName, change) {
+                if (!order[productName]) {
+                    order[productName] = 0;
+                }
+                
+                order[productName] += change;
+                
+                if (order[productName] < 0) {
+                    order[productName] = 0;
+                }
+                
+                renderOrderForm();
+            }
+            
+            function updateTotal() {
+                let total = 0;
+                
+                for (const productName in order) {
+                    if (order[productName] > 0) {
+                        const product = products.find(p => p.name === productName);
+                        if (product) {
+                            total += product.price * order[productName];
+                        }
+                    }
+                }
+                
+                totalAmountElement.textContent = total;
+            }
+            
+            function sendOrder() {
+                const customerName = document.getElementById('customerName').value;
+                const customerPhone = document.getElementById('customerPhone').value;
+                const customerAddress = document.getElementById('customerAddress').value;
+                const customerNotes = document.getElementById('customerNotes').value;
+                
+                if (!customerName || !customerPhone || !customerAddress) {
+                    alert('Por favor complete todos los campos obligatorios');
+                    return;
+                }
+                
+                let orderText = `¡Hola! Quiero realizar el siguiente pedido:\n\n`;
+                orderText += `*Cliente:* ${customerName}\n`;
+                orderText += `*Teléfono:* ${customerPhone}\n`;
+                orderText += `*Dirección:* ${customerAddress}\n`;
+                
+                if (customerNotes) {
+                    orderText += `*Notas:* ${customerNotes}\n`;
+                }
+                
+                orderText += `\n*Detalle del pedido:*\n`;
+                
+                let hasItems = false;
+                let total = 0;
+                
+                for (const productName in order) {
+                    if (order[productName] > 0) {
+                        hasItems = true;
+                        const product = products.find(p => p.name === productName);
+                        if (product) {
+                            const subtotal = product.price * order[productName];
+                            orderText += `- ${productName}: ${order[productName]} x $${product.price} = $${subtotal}\n`;
+                            total += subtotal;
+                        }
+                    }
+                }
+                
+                if (!hasItems) {
+                    alert('Por favor seleccione al menos un producto');
+                    return;
+                }
+                
+                orderText += `\n*Total: $${total}*\n\n`;
+                orderText += `Gracias, Cárnicos Habana!`;
+                
+                const encodedMessage = encodeURIComponent(orderText);
+                const whatsappUrl = `https://wa.me/5358692631?text=${encodedMessage}`;
+                
+                window.open(whatsappUrl, '_blank');
+                closeModal();
+            }
+            
+            submitOrderBtn.addEventListener('click', sendOrder);
+        });
+    </script>
 </body>
 </html>
